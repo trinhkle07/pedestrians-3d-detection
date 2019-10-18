@@ -1,16 +1,27 @@
-#  PPLP : Pedestrian Planar LiDAR Pose Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Images
+#  PPLP : Pedestrian Planar LiDAR Pose Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Camera
 
-This repository contains the public release of the Python implementation of Pedestrian Planar LiDAR Pose Network (PPLP) Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Images, along with an implementation of Aggregate View Object Detection (AVOD) method as the baseline.
+This repository contains the public release of the Python implementation of Pedestrian Planar LiDAR Pose Network (PPLP) Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Camera, along with an implementation of Aggregate View Object Detection (AVOD) method as the baseline.
 
 We appreciate if you could cite our paper:
 ```
 TODO
 ```
 
-### Videos
-```
-TODO
-```
+### Images
+1. **Overall Architecture**:
+   <img src="pplp_media/overall_architecture.jpg" alt="Architecture" style="zoom:100%;" />
+2. **A sample from CMU dataset:**
+   <img src="pplp_media/an_example.png" alt="An Example" style="zoom:75%;" />
+3. **Comparison on CMU dataset:**
+   <img src="pplp_media/CMU-dataset.png" alt="CMU dataset" style="zoom:75%;" />
+4. **Comparison on  FMP dataset:**
+   <img src="pplp_media/FMP-dataset.png" alt="FMP dataset" style="zoom:75%;" />
+5. **Our encoding vs AVOD's encoding of LiDAR signal**:
+   <img src="pplp_media/encoding.jpg" alt="Encoding" style="zoom:75%;" />
+6. **Result comparison:**
+   <img src="pplp_media/comparison.jpg" alt="Comparison" style="zoom:75%;" />
+
+
 
 ## Getting Started
 Implemented and tested on Ubuntu 16.04 with Python 3.5 and Tensorflow 1.3.0.
@@ -249,7 +260,7 @@ All results should be saved in `pplp/data/outputs`. Here you should see `proposa
 
 **Remember, the script needs to be configured** to your specific experiments. Run `python3 demos/show_predictions_2d_pplp_panoptic.py`.
 
-**To visualize the OirentNet Panoptic results**:
+**To visualize the OrientNet Panoptic results**:
 
 **Remember, the script needs to be configured** to your specific experiments. Run `python3 demos/show_predictions_2d_orientnet_panoptic.py`.
 
