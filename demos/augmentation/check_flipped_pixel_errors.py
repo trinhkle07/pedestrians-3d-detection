@@ -9,9 +9,9 @@ import numpy as np
 from wavedata.tools.core import calib_utils
 from wavedata.tools.obj_detection import obj_utils
 
-from avod.builders.dataset_builder import DatasetBuilder
-from avod.core import box_3d_projector, box_3d_encoder
-from avod.datasets.kitti import kitti_aug
+from pplp.builders.dataset_builder import DatasetBuilder
+from pplp.core import box_3d_projector, box_3d_encoder
+from pplp.datasets.kitti import kitti_aug
 
 
 def main():

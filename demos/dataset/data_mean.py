@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 
-from avod.builders.dataset_builder import DatasetBuilder
+from pplp.builders.dataset_builder import DatasetBuilder
 
 
 def main():

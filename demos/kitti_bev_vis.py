@@ -1,3 +1,11 @@
+# Add this block for ROS python conflict
+import sys
+try:
+    sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
+    sys.path.remove('$HOME/segway_kinetic_ws/devel/lib/python2.7/dist-packages')
+except ValueError:
+    pass
+
 import cv2
 from google.protobuf import text_format
 import numpy as np
@@ -6,9 +14,9 @@ import numpy.random as random
 from wavedata.tools.obj_detection import obj_utils
 from wavedata.tools.visualization import vis_utils
 
-from avod.builders.dataset_builder import DatasetBuilder
-from avod.core import box_3d_encoder
-from avod.core import box_3d_projector
+from pplp.builders.dataset_builder import DatasetBuilder
+from pplp.core import box_3d_encoder
+from pplp.core import box_3d_projector
 
 
 def draw_boxes(image, boxes_norm):
@@ -63,15 +71,15 @@ def main():
     slices_config = \
         """
         slices {
-            height_lo: -0.2
-            height_hi: 2.3
-            num_slices: 5
+            height_lo: 0.9 # -0.2
+            height_hi: 1.0 # 2.3
+            num_slices: 1 # 5
         }
         """
 
     # Use None for a random image
-    img_idx = None
-    # img_idx = 142
+    # img_idx = None
+    img_idx = 571
     # img_idx = 191
 
     show_ground_truth = True  # Whether to overlay ground_truth boxes
@@ -91,6 +99,7 @@ def main():
     else:
         raise ValueError('Invalid bev_generator')
 
+    print('dataset_config = ', dataset_config)
     dataset = DatasetBuilder.build_kitti_dataset(dataset_config,
                                                  use_defaults=False)
 
@@ -117,8 +126,11 @@ def main():
     if show_ground_truth:
         # Get projected boxes
         obj_labels = obj_utils.read_labels(dataset.label_dir, img_idx)
-
-        filtered_objs = obj_labels
+        filtered_objs = dataset.kitti_utils.filter_labels(
+            obj_labels, ['Car', 'Pedestrian'])
+        # filtered_objs = dataset.kitti_utils.filter_labels(
+        #     obj_labels, ['Car', 'Van', 'Pedestrian', 'Cyclist'])
+        print('filtered_objs = ', filtered_objs)
 
         label_boxes = []
         for label in filtered_objs:

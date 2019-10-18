@@ -1,4 +1,4 @@
-from avod.builders.dataset_builder import DatasetBuilder
+from pplp.builders.dataset_builder import DatasetBuilder
 
 from scripts.preprocessing import gen_mini_batches
 from scripts.preprocessing import gen_label_clusters

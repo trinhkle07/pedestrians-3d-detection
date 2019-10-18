@@ -5,7 +5,7 @@ import numpy as np
 
 from wavedata.tools.obj_detection import obj_utils
 
-from avod.builders.dataset_builder import DatasetBuilder
+from pplp.builders.dataset_builder import DatasetBuilder
 
 
 def main():

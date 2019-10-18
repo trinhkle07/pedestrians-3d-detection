@@ -1,0 +1,23 @@
+package pplp.protos;
+
+import "pplp/protos/model.proto";
+import "pplp/protos/train.proto";
+import "pplp/protos/eval.proto";
+import "pplp/protos/panoptic_dataset.proto";
+
+// Convenience message for configuring a training and eval pipeline.
+// Allows all of the pipeline parameters to be configured from one file.
+message NetworkPipelinePanopticConfig {
+
+	// Detection Model config
+	optional ModelConfig model_config = 1;
+
+	// Training config
+	optional TrainConfig train_config = 2;
+
+	// Evaluation config
+	optional EvalConfig eval_config = 3;
+
+	// PanopticDataset configuration
+	optional PanopticDatasetConfig dataset_config = 4;
+}

@@ -1,96 +1,39 @@
-# Aggregate View Object Detection
-[1]: https://travis-ci.com/kujason/avod
-[![Build Status](https://travis-ci.com/kujason/avod.svg?token=q1CfB5VfAVvKxUyudP69&branch=master)][1]
+#  PPLP : Pedestrian Planar LiDAR Pose Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Images
 
-This repository contains the public release of the Python implementation of our Aggregate View Object Detection (AVOD) network for 3D object detection.
+This repository contains the public release of the Python implementation of Pedestrian Planar LiDAR Pose Network (PPLP) Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Images, along with an implementation of Aggregate View Object Detection (AVOD) method as the baseline.
 
-[**Joint 3D Proposal Generation and Object Detection from View Aggregation**](https://arxiv.org/abs/1712.02294)
-
-[Jason Ku](https://github.com/kujason), [Melissa Mozifian](https://melfm.github.io/), [Jungwook Lee](https://github.com/jungwook-lee), [Ali Harakeh](https://www.aharakeh.com/), [Steven L. Waslander](https://scholar.google.ca/citations?user=CwgGTXMAAAAJ)
-
-If you use this code, please cite our paper:
+We appreciate if you could cite our paper:
 ```
-@article{ku2018joint, 
-  title={Joint 3D Proposal Generation and Object Detection from View Aggregation}, 
-  author={Ku, Jason and Mozifian, Melissa and Lee, Jungwook and Harakeh, Ali and Waslander, Steven}, 
-  journal={IROS}, 
-  year={2018}
-}
+TODO
 ```
 
 ### Videos
-These videos show detections on several KITTI sequences and our own data in snowy and night driving conditions (with no additional training data).
-
-#### AVOD Detections
-[![here](https://img.youtube.com/vi/Q1f-s6_yHtw/mqdefault.jpg)](https://youtu.be/Q1f-s6_yHtw)
-
-#### AVOD-FPN Detections
-[![here](https://img.youtube.com/vi/mDaqKICiHyA/mqdefault.jpg)](https://youtu.be/mDaqKICiHyA)
-
-
-### KITTI Object Detection Results (3D and BEV)
-|              |             |   |           |        AP-3D |           |   |           |       AP-BEV |           |
-|:------------:|:-----------:|---|:---------:|:------------:|:---------:|---|:---------:|:------------:|:---------:|
-|   **Method** | **Runtime** |   |  **Easy** | **Moderate** |  **Hard** |   |  **Easy** | **Moderate** |  **Hard** |
-|        *Car* |             |   |           |              |           |   |           |              |           |
-|         MV3D |      0.36   |   |   71.09   |      62.35   |   55.12   |   |   86.02   |      76.90   |   68.49   |
-|     VoxelNet |      0.23   |   |   77.47   |      65.11   |   57.73   |   | **89.35** |      79.26   |   77.39   |
-|   F-PointNet |      0.17   |   |   81.20   |      70.39   |   62.19   |   |   88.70   |      84.00   |   75.33   |
-|         AVOD |    **0.08** |   |   73.59   |      65.78   |   58.38   |   |   86.80   |    **85.44** |   77.73   |
-|     AVOD-FPN |      0.10   |   | **81.94** |    **71.88** | **66.38** |   |   88.53   |      83.79   | **77.90** |
-|              |             |   |           |              |           |   |           |              |           |
-| *Pedestrian* |             |   |           |              |           |   |           |              |           |
-|     VoxelNet |      0.23   |   |   39.48   |      33.69   |   31.51   |   |   46.13   |      40.74   |   38.11   |
-|   F-PointNet |      0.17   |   | **51.21** |    **44.89** |   40.23   |   |   58.09   |      50.22   |   47.20   |
-|         AVOD |    **0.08** |   |   38.28   |      31.51   |   26.98   |   |   42.52   |      35.24   |   33.97   |
-|     AVOD-FPN |      0.10   |   |   50.80   |      42.81   | **40.88** |   | **58.75** |    **51.05** | **47.54** |
-|              |             |   |           |              |           |   |           |              |           |
-|    *Cyclist* |             |   |           |              |           |   |           |              |           |
-|     VoxelNet |      0.23   |   |   61.22   |      48.36   |   44.37   |   |   66.70   |      54.76   |   50.55   |
-|   F-PointNet |      0.17   |   | **71.96** |    **56.77** | **50.39** |   | **75.38** |    **61.96** | **54.68** |
-|         AVOD |    **0.08** |   |   60.11   |      44.90   |   38.80   |   |   63.66   |      47.74   |   46.55   |
-|     AVOD-FPN |      0.10   |   |   64.00   |      52.18   |   46.61   |   |   68.09   |      57.48   |   50.77   |
-
-Table: Comparison of results with other published methods on the KITTI [3D Object](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d) and [BEV](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=bev) benchmarks (accessed Apr 11, 2018).
-
-### Additional Links
-
-#### AVOD-SSD
-There is a single stage version of AVOD available [here](https://github.com/melfm/avod-ssd)
-
-#### Average Heading Similarity (AHS) Native Evaluation
-See [here](https://github.com/asharakeh/kitti_native_evaluation) for more information on the modified KITTI native evaluation script.
+```
+TODO
+```
 
 ## Getting Started
 Implemented and tested on Ubuntu 16.04 with Python 3.5 and Tensorflow 1.3.0.
 
 1. Clone this repo
+2. Install Python dependencies (also tested with tensorflow-gpu 1.8.0)
 ```bash
-git clone git@github.com:kujason/avod.git --recurse-submodules
-```
-If you forget to clone the wavedata submodule:
-```bash
-git submodule update --init --recursive
-```
-
-2. Install Python dependencies
-```bash
-cd avod
+cd PPLP
 pip3 install -r requirements.txt
 pip3 install tensorflow-gpu==1.3.0
 ```
 
-3. Add `avod (top level)` and `wavedata` to your PYTHONPATH
+3. Add `PPLP (top level)` and `PPLP/wavedata` to your PYTHONPATH
+For virtualenv wrapper users
 ```bash
-# For virtualenvwrapper users
 add2virtualenv .
 add2virtualenv wavedata
 ```
 
+For nonvirtualenv users
 ```bash
-# For nonvirtualenv users
-export PYTHONPATH=$PYTHONPATH:'/path/to/avod'
-export PYTHONPATH=$PYTHONPATH:'/path/to/avod/wavedata'
+export PYTHONPATH=$PYTHONPATH:'/path/to/PPLP'
+export PYTHONPATH=$PYTHONPATH:'/path/to/PPLP/wavedata'
 ```
 
 4. Compile integral image library in wavedata
@@ -98,115 +41,220 @@ export PYTHONPATH=$PYTHONPATH:'/path/to/avod/wavedata'
 sh scripts/install/build_integral_image_lib.bash
 ```
 
-5. Avod uses Protobufs to configure model and training parameters. Before the framework can be used, the protos must be compiled (from top level avod folder):
+5. Our work uses Protobufs to configure model and training parameters. Before the framework can be used, the protos must be compiled (from top level folder):
+If you have old protos files, clear them first:
 ```bash
-sh avod/protos/run_protoc.sh
+sh pplp/protos/clear_protos.sh
+```
+Then compile the new protos files:
+```bash
+sh pplp/protos/run_protoc.sh
 ```
 
-Alternatively, you can run the `protoc` command directly:
+Alternatively(only if the above commands failed), you can run the `protoc` command directly:
 ```bash
-protoc avod/protos/*.proto --python_out=.
+protoc pplp/protos/*.proto --python_out=.
 ```
+
+6. Install pyntcloud for pointcloud reading:
+```sudo pip3 install git+https://github.com/daavoo/pyntcloud```
+
+(Please make sure you have minimum requirements indicated here: https://github.com/daavoo/pyntcloud/blob/master/docs/installation.rst)
 
 ## Training
 ### Dataset
-To train on the [Kitti Object Detection Dataset](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d):
-- Download the data and place it in your home folder at `~/Kitti/object`
+<!-- To train on the [Panoptic Object Detection Dataset]
+- Download Panoptic dataset. (TO DO: Add dataset links)
+- go to `pplp/protos/panoptic_dataset.proto` and change the dataset path. Then rebuild protos files.
+
+<!-- To train on the [Kitti Object Detection Dataset]:
+- Download the data (http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d) and place it in your home folder at `~/Kitti/object`
 - Go [here](https://drive.google.com/open?id=1yjCwlSOfAZoPNNqoMtWfEjPCfhRfJB-Z) and download the `train.txt`, `val.txt` and `trainval.txt` splits into `~/Kitti/object`. Also download the `planes` folder into `~/Kitti/object/training`
 
+<!-- No matter which dataset you choose:
 The folder should look something like the following:
 ```
 Kitti
-    object
-        testing
-        training
-            calib
-            image_2
-            label_2
-            planes
-            velodyne
-        train.txt
-        val.txt
-```
+└── object
+    ├── testing
+    │   ├── calib
+    │   │   ├── xxxxxx.txt
+    │   │   └── xxxxxx.txt
+    │   ├── image_2
+    │   │   ├── xxxxxx.png
+    │   │   └── xxxxxx.png
+    │   └── velodyne
+    │       ├── xxxxxx.bin
+    │       └── xxxxxx.bin
+    ├── training
+    │   ├── calib
+    │   │   ├── xxxxxx.txt
+    │   │   └── xxxxxx.txt
+    │   ├── image_2
+    │   │   ├── xxxxxx.png
+    │   │   └── xxxxxx.png
+    │   ├── label_2
+    │   │   ├── xxxxxx.txt
+    │   │   └── xxxxxx.txt
+    │   ├── planes
+    │   │   ├── xxxxxx.txt
+    │   │   └── xxxxxx.txt
+    │   └── velodyne
+    │       ├── xxxxxx.bin
+    │       └── xxxxxx.bin
+    ├── train.txt
+    └── val.txt
+​``` -->
 
 ### Mini-batch Generation
-The training data needs to be pre-processed to generate mini-batches for the RPN. To configure the mini-batches, you can modify `avod/configs/mb_preprocessing/rpn_[class].config`. You also need to select the *class* you want to train on. Inside the `scripts/preprocessing/gen_mini_batches.py` select the classes to process. By default it processes the *Car* and *People* classes, where the flag `process_[class]` is set to True. The People class includes both Pedestrian and Cyclists. You can also generate mini-batches for a single class such as *Pedestrian* only.
+The training data needs to be pre-processed to generate mini-batches for the RPN. To configure the mini-batches, you can modify the config files under path: `pplp/configs/mb_preprocessing`. By default it processes the *Pedestrian* class. Theoretically you can use our PPLP network on other classes as well if you have proper dataset for that.
 
 Note: This script does parallel processing with `num_[class]_children` processes for faster processing. This can also be disabled inside the script by setting `in_parallel` to `False`.
 
-```bash
-cd avod
-python scripts/preprocessing/gen_mini_batches.py
+To generate mini-batches for Panoptic dataset(for PPLP and AVOD(2D)):
+​```bash
+cd PPLP
+python3 scripts/preprocessing/gen_mini_batches_from_panoptic_dataset.py --pipeline_config=pplp/configs/pplp_pedestrian_panoptic.config
 ```
 
-Once this script is done, you should now have the following folders inside `avod/data`:
+or to generate mini-batches for Panoptic dataset(for AVOD(3D)):
+```bash
+cd PPLP
+python3 scripts/preprocessing/gen_mini_batches_3d_from_panoptic_dataset.py --pipeline_config=pplp/configs/avod_3d_pedestrian_panoptic.config
+```
+
+Once this script is done, you should now have the following folders inside `pplp/data`:
 ```
 data
-    label_clusters
-    mini_batches
+├── label_clusters
+|   └── xxxxxx
+└── mini_batches
+    └── xxxxxx
 ```
 
 ### Training Configuration
-There are sample configuration files for training inside `avod/configs`. You can train on the example configs, or modify an existing configuration. To train a new configuration, copy a config, e.g. `pyramid_cars_with_aug_example.config`, rename this file to a unique experiment name and make sure the file name matches the `checkpoint_name: 'pyramid_cars_with_aug_example'` entry inside your config.
+There are sample configuration files for training inside `pplp/configs`. You can train on the example config, or modify an existing configuration. To train a new configuration, copy a config, e.g. `pplp_example.config`, rename this file to a unique experiment name and make sure the file name matches the `checkpoint_name: 'pplp_example'` entry inside your config.
 
 ### Run Trainer
-To start training, run the following:
+Training defaults to using GPU device 1, and the `train` split. You can specify using the GPU device and data split.
+
+**To start AVOD(baseline, train with 2D LiDAR) training on Panoptic dataset, run the following**:
 ```bash
-python avod/experiments/run_training.py --pipeline_config=avod/configs/pyramid_cars_with_aug_example.config
+python3 pplp/experiments/run_avod_panoptic_training.py --pipeline_config=pplp/configs/avod_pedestrian_panoptic.config  --device='0' --data_split='train'
 ```
-(Optional) Training defaults to using GPU device 1, and the `train` split. You can specify using the GPU device and data split as follows:
+
+**To start AVOD(baseline, train with 3D LiDAR, for comparison only) training on Panoptic dataset, run the following**:
+
 ```bash
-python avod/experiments/run_training.py --pipeline_config=avod/configs/pyramid_cars_with_aug_example.config  --device='0' --data_split='train'
+python3 pplp/experiments/run_avod_3d_panoptic_training.py --pipeline_config=pplp/configs/avod_3d_pedestrian_panoptic.config  --device='0' --data_split='train'
 ```
-Depending on your setup, training should take approximately 16 hours with a Titan Xp, and 20 hours with a GTX 1080. If the process was interrupted, training (or evaluation) will continue from the last saved checkpoint if it exists.
+
+**To Start PPLP(ours) training on Panoptic dataset, we should make the orient_batches and build the groundtruth for OrientNet**:
+(This step can be skipped if you download the 'data' folder from "TODO", and placed them under path: 'PPLP/pplp')
+```bash
+python3 scripts/preprocessing/gen_orient_batches.py
+```
+
+There should be a 'Pedestrian[orient]' folder generated under folder "PPLP/pplp/data/mini_batches/iou_2d/panoptic/train/lidar".
+
+Then we should modify these results according to the MaskRCNN detections, following the instruction here: "TODO". The groundtruth files should contain only orientation for each pedestrians in the same order as the order of the MaskRCNN results.
+
+**To Start OrientNet training on Panoptic dataset**:
+```bash
+python3 pplp/experiments/run_orientnet_panoptic_training.py --pipeline_config=pplp/configs/orientation_pedestrian_panoptic.config --device='0' --data_split='train'
+```
+
+**To build OrientNet results for PPLPNet**:
+(This step can be skipped if you download the 'data' folder from "TODO", and placed them under path: 'PPLP/pplp')
+
+The PPLPNet is trained after the OrientNet is finished. So if we want to train the PPLPNet, we shall first generate detection results from OrientNet and save the results in 'npy' files and put them under "PPLP/pplp/data/mini_batches/iou_2d/panoptic/train/lidar/Pedestrian[orient_pred]". For details, see the "To start evaluation for OrientNet..." part of "Run Evaluator".
+
+**To Start PPLPNet training on Panoptic dataset**:
+```bash
+python3 pplp/experiments/run_pplp_panoptic_training.py --pipeline_config=pplp/configs/pplp_pedestrian_panoptic.config --device='0' --data_split='train'
+```
+
+Depending on your setup, training should take approximately 16 hours with a Titan Xp, and 20 hours with a GTX 1080. If the process were interrupted, training (or evaluation) would continue from the last saved checkpoint if it exists.
 
 ### Run Evaluator
-To start evaluation, run the following:
+**Read this block first.**
+Delete old prediction files if you are not running for the first time!(directory might be something like this: `pplp/data/outputs/pplp_pedestrian_panoptic/predictions`).
+Then make sure you configure these shell scripts correctly(especially the path of your dataset):
+
+`scripts/offline_eval/panoptic_pplp_eval/run_eval_05_iou.sh`
+
+`scripts/offline_eval/panoptic_pplp_eval/run_eval.sh`
+
+`scripts/offline_eval/panoptic_pplp_eval/all_eval.sh`
+
+or
+
+`scripts/offline_eval/kitti_native_eval/run_eval_05_iou.sh`
+
+`scripts/offline_eval/kitti_native_eval/run_eval.sh`
+
+`scripts/offline_eval/kitti_native_eval/all_eval.sh`
+
+If you want to change the evaluation threshold, it is in: `pplp/protos/eval.proto`. Default value is 0.3. Remember to `sh pplp/protos/clear_protos.sh` and then `sh pplp/protos/run_protoc.sh` if you changed anything.
+
+We are trying to use the C++ code from KITTI dataset to evaluate the predeiction results. So please make sure the settings in `scripts/offline_eval/panoptic_pplp_eval/evaluate_object_3d_offline.cpp` and `scripts/offline_eval/panoptic_pplp_eval/evaluate_object_3d_offline_05_iou.cpp` are all correct. Especially `const double N_SAMPLE_PTS` (default=41 in KITTI dataset).
+
+**To start evaluation for AVOD method on Panoptic dataset, run the following, (Optional) With additional options**:
+
+Before you run, please make sure the model settings in function `run_latest_checkpoints()` inside `avod_panoptic_evaluator.py` is all correct!
+
+Evaluate AVOD(trained by 2D LIDAR signal) method:
 ```bash
-python avod/experiments/run_evaluation.py --pipeline_config=avod/configs/pyramid_cars_with_aug_example.config
+python3 pplp/experiments/run_avod_panoptic_evaluation.py --pipeline_config=pplp/configs/avod_pedestrian_panoptic.config --device='0' --data_split='val'
 ```
-(Optional) With additional options:
+
+Evaluate AVOD(trained by 3D LIDAR signal) method:
 ```bash
-python avod/experiments/run_evaluation.py --pipeline_config=avod/configs/pyramid_cars_with_aug_example.config --device='0' --data_split='val'
+python3 pplp/experiments/run_avod_3d_panoptic_evaluation.py --pipeline_config=pplp/configs/avod_3d_pedestrian_panoptic.config --device='0' --data_split='val'
+```
+
+**To start evaluation for PPLP method on Panoptic dataset, run the following, (Optional) With additional options**:
+
+Before you run, please make sure the model settings in function `run_latest_checkpoints()` inside `pplp_panoptic_evaluator.py` is all correct!
+```bash
+python3 pplp/experiments/run_pplp_panoptic_evaluation.py --pipeline_config=pplp/configs/pplp_pedestrian_panoptic.config --device='0' --data_split='val'
+```
+
+**To start evaluation for OrientNet on Panoptic dataset, run the following, (Optional) With additional options**:
+
+Before you run, please make sure the model settings in function `run_latest_checkpoints()` inside `orientnet_panoptic_evaluator.py` is all correct!
+```bash
+python3 pplp/experiments/run_orientnet_panoptic_evaluation.py --pipeline_config=pplp/configs/orientation_pedestrian_panoptic.config --device='0' --data_split='val'
+```
+
+**To start evaluation for PPLP method on Panoptic dataset, run the following, (Optional) With additional options**:
+
+Before you run, please make sure the model settings in function `run_latest_checkpoints()` inside `pplp_panoptic_evaluator.py` is all correct!
+```bash
+python3 pplp/experiments/run_pplp_panoptic_evaluation.py --pipeline_config=pplp/configs/pplp_pedestrian_panoptic.config --device='0' --data_split='val'
 ```
 
 The evaluator has two main modes, you can either evaluate a single checkpoint, a list of indices of checkpoints, or repeatedly. The evaluator is designed to be run in parallel with the trainer on the same GPU, to repeatedly evaluate checkpoints. This can be configured inside the same config file (look for `eval_config` entry).
 
-To view the TensorBoard summaries:
-```bash
-cd avod/data/outputs/pyramid_cars_with_aug_example
-tensorboard --logdir logs
-```
-
-Note: In addition to evaluating the loss, calculating accuracies, etc, the evaluator also runs the KITTI native evaluation code on each checkpoint. Predictions are converted to KITTI format and the AP is calculated for every checkpoint. The results are saved inside `scripts/offline_eval/results/pyramid_cars_with_aug_example_results_0.1.txt` where `0.1` is the score threshold. IoUs are set to (0.7, 0.5, 0.5) 
-
-### Run Inference
-To run inference on the `val` split, run the following script:
-```bash
-python avod/experiments/run_inference.py --checkpoint_name='pyramid_cars_with_aug_example' --data_split='val' --ckpt_indices=120 --device='1'
-```
-The `ckpt_indices` here indicates the indices of the checkpoint in the list. If the `checkpoint_interval` inside your config is `1000`, to evaluate checkpoints `116000` and `120000`, the indices should be `--ckpt_indices=116 120`. You can also just set this to `-1` to evaluate the last checkpoint.
+Note: In addition to evaluating the loss, calculating accuracies, etc, the evaluator also runs the KITTI native evaluation code on each checkpoint. Predictions are converted to KITTI format and the AP is calculated for every checkpoint. The results are saved inside `scripts/offline_eval/results/avod_cars_example_results_0.1.txt` where `0.1` is the score threshold.
 
 ### Viewing Results
-All results should be saved in `avod/data/outputs`. Here you should see `proposals_and_scores` and `final_predictions_and_scores` results. To visualize these results, you can run `demos/show_predictions_2d.py`. The script needs to be configured to your specific experiments. The `scripts/offline_eval/plot_ap.py` will plot the AP vs. step, and print the 5 highest performing checkpoints for each evaluation metric at the moderate difficulty.
+All results should be saved in `pplp/data/outputs`. Here you should see `proposals_and_scores` and `final_predictions_and_scores` results.
 
-## LICENSE
-Copyright (c) 2018 [Jason Ku](https://github.com/kujason), [Melissa Mozifian](https://github.com/melfm), [Ali Harakeh](www.aharakeh.com), [Steven L. Waslander](http://wavelab.uwaterloo.ca)
+**To visualize the AVOD Panoptic results**:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+**Remember, the script needs to be configured** to your specific experiments. Run `python3 demos/show_predictions_2d_avod_panoptic.py`.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+**To visualize the PPLP Panoptic results**:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+**Remember, the script needs to be configured** to your specific experiments. Run `python3 demos/show_predictions_2d_pplp_panoptic.py`.
+
+**To visualize the OirentNet Panoptic results**:
+
+**Remember, the script needs to be configured** to your specific experiments. Run `python3 demos/show_predictions_2d_orientnet_panoptic.py`.
+
+**To visualize the PPLP Panoptic results**:
+
+**Remember, the script needs to be configured** to your specific experiments. Run `python3 demos/show_predictions_2d_pplp_panoptic.py`.
+
+Run `python3 scripts/offline_eval/plot_ap.py` will plot the AP vs. step, and print the 5 highest performing checkpoints for each evaluation metric at the moderate difficulty.

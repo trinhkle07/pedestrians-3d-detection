@@ -8,11 +8,11 @@ from PIL import Image
 from wavedata.tools.core import calib_utils
 from wavedata.tools.visualization import vis_utils
 
-from avod.builders.dataset_builder import DatasetBuilder
-from avod.core import anchor_projector
-from avod.core import box_3d_encoder
-from avod.core.anchor_generators import grid_anchor_3d_generator
-from avod.core.label_cluster_utils import LabelClusterUtils
+from pplp.builders.dataset_builder import DatasetBuilder
+from pplp.core import anchor_projector
+from pplp.core import box_3d_encoder
+from pplp.core.anchor_generators import grid_anchor_3d_generator
+from pplp.core.label_cluster_utils import LabelClusterUtils
 
 
 def main():

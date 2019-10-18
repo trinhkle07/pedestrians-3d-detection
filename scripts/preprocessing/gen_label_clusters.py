@@ -1,4 +1,4 @@
-from avod.builders.dataset_builder import DatasetBuilder
+from pplp.builders.dataset_builder import DatasetBuilder
 
 
 def main(dataset=None):

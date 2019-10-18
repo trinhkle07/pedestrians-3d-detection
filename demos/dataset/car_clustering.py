@@ -5,8 +5,8 @@ from sklearn.cluster import KMeans
 
 from wavedata.tools.obj_detection import obj_utils
 
-from avod.builders.dataset_builder import DatasetBuilder
-from avod.core.label_cluster_utils import LabelClusterUtils
+from pplp.builders.dataset_builder import DatasetBuilder
+from pplp.core.label_cluster_utils import LabelClusterUtils
 
 
 def main():

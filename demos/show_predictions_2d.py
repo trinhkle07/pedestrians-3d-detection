@@ -1,6 +1,14 @@
 import os
-import sys
 import time
+
+# Add this block for ROS python conflict
+import sys
+try:
+    sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
+    sys.path.remove('$HOME/segway_kinetic_ws/devel/lib/python2.7/dist-packages')
+except ValueError:
+    pass
+import cv2
 
 import numpy as np
 
@@ -14,12 +22,13 @@ from wavedata.tools.obj_detection import obj_utils
 from wavedata.tools.obj_detection import evaluation
 from wavedata.tools.visualization import vis_utils
 
-import avod
-from avod.builders.dataset_builder import DatasetBuilder
-from avod.core import box_3d_encoder
-from avod.core import box_3d_projector
-from avod.core import anchor_projector
+import pplp
+from pplp.builders.dataset_builder import DatasetBuilder
+from pplp.core import box_3d_encoder
+from pplp.core import box_3d_projector
+from pplp.core import anchor_projector
 
+from google.protobuf import text_format
 
 BOX_COLOUR_SCHEME = {
     'Car': '#00FF00',           # Green
@@ -45,6 +54,7 @@ def main():
     ##############################
     # Options
     ##############################
+    dataset_config = DatasetBuilder.merge_defaults(dataset_config)
     dataset_config.data_split = 'val'
 
     fig_size = (10, 6.1)
@@ -52,27 +62,45 @@ def main():
     rpn_score_threshold = 0.1
     avod_score_threshold = 0.1
 
-    gt_classes = ['Car']
+    # gt_classes = ['Car']
+    gt_classes = ['Pedestrian']
     # gt_classes = ['Pedestrian', 'Cyclist']
 
     # Overwrite this to select a specific checkpoint
-    global_step = None
-    checkpoint_name = 'avod_cars_example'
+    global_step = 115000  # None
+    checkpoint_name = 'pplp_pedestrian_kitti'
 
     # Drawing Toggles
     draw_proposals_separate = False
-    draw_overlaid = False
-    draw_predictions_separate = True
+    draw_overlaid = True  # To draw both proposal and predcition bounding boxes
+    draw_predictions_separate = False
 
     # Show orientation for both GT and proposals/predictions
-    draw_orientations_on_prop = False
-    draw_orientations_on_pred = False
+    draw_orientations_on_prop = True
+    draw_orientations_on_pred = True
 
     # Draw 2D bounding boxes
     draw_projected_2d_boxes = True
 
+    # Draw pointclouds
+    draw_point_cloud = True
+    point_cloud_source = 'lidar'
+    slices_config = \
+        """
+        slices {
+            height_lo: -1.0 # -0.2
+            height_hi: 2 # 2.3
+            num_slices: 1 # 5
+        }
+        """
+
+    print('slices_config = ', slices_config)
+
+    text_format.Merge(slices_config,
+                      dataset_config.kitti_utils_config.bev_generator)
+
     # Save images for samples with no detections
-    save_empty_images = True
+    save_empty_images = False
 
     draw_score = True
     draw_iou = True
@@ -81,10 +109,11 @@ def main():
     ##############################
 
     # Get the dataset
-    dataset = DatasetBuilder.build_kitti_dataset(dataset_config)
+    dataset = DatasetBuilder.build_kitti_dataset(dataset_config,
+                                                 use_defaults=False)
 
     # Setup Paths
-    predictions_dir = avod.root_dir() + \
+    predictions_dir = pplp.root_dir() + \
         '/data/outputs/' + checkpoint_name + '/predictions'
 
     proposals_and_scores_dir = predictions_dir + \
@@ -138,7 +167,8 @@ def main():
     last_times = np.repeat(time.time(), avg_time_arr_length) + \
         np.arange(avg_time_arr_length)
 
-    for sample_idx in range(dataset.num_samples):
+    # for sample_idx in range(dataset.num_samples):
+    for sample_idx in [6]:
         # Estimate time remaining with 5 slowest times
         start_time = time.time()
         last_times = np.roll(last_times, -1)
@@ -277,6 +307,55 @@ def main():
                            prop_2d_axes,
                            prop_3d_axes,
                            draw_orientations_on_prop)
+            if draw_point_cloud:
+                # Filter the useful pointclouds from all points
+                kitti_utils = dataset.kitti_utils
+                x, y, z, i = calib_utils.read_lidar(dataset.velo_dir, img_idx)
+                point_cloud = np.vstack((x, y, z))
+                # pts = calib_utils.lidar_to_cam_frame(pts, frame_calib)
+                # point_cloud = kitti_utils.get_point_cloud(
+                #     point_cloud_source, img_idx, image_size)
+                point_cloud = kitti_utils.get_point_cloud(
+                    point_cloud_source, img_idx, image_size)
+                print('point_cloud = ', point_cloud)
+                ground_plane = kitti_utils.get_ground_plane(sample_name)
+                all_points = np.transpose(point_cloud)
+                # print('dataset_config.kitti_utils_config.bev_generator.\
+                # slices.height_lo = ', dataset_config.kitti_utils_config.bev_generator.slices.height_lo)
+                height_lo = dataset_config.kitti_utils_config.bev_generator.slices.height_lo
+                height_hi = dataset_config.kitti_utils_config.bev_generator.slices.height_hi
+
+                # config = dataset.config.kitti_utils_config
+                # print('config = ', config)
+                area_extents = [[0., 70.],[-40, 40],[-1.1, -1]]
+                # ?,x,?
+                area_extents = np.reshape(area_extents, (3, 2))
+                print('area_extents = ', area_extents)
+                print('ground_plane = ', ground_plane)
+                slice_filter = get_point_filter(point_cloud, area_extents, ground_plane=None, offset_dist=2.0)
+
+
+
+
+
+                # slice_filter = kitti_utils.create_slice_filter(
+                #     point_cloud,
+                #     area_extents,
+                #     ground_plane,
+                #     height_lo,
+                #     height_hi)
+                # Apply slice filter
+                slice_points = all_points[slice_filter]
+                print('slice_points = ', slice_points)
+                # print('slice_points =', slice_points)
+                # Project the useful pointclouds on 2D image
+                point_2d = obj_utils.get_lidar_points_on_2D_image(img_idx,
+                                                                  dataset.calib_dir,
+                                                                  dataset.velo_dir,
+                                                                  image_size,
+                                                                  True,
+                                                                  slice_points)
+                draw_points(prop_2d_axes, point_2d, 'red')
 
             if draw_proposals_separate:
                 # Save just the proposals
@@ -528,6 +607,11 @@ def draw_predictions(filtered_gt_objs,
                                  gt_classes)
 
 
+def draw_points(ax, filtered_2d_pts, color_tm):
+    ax.plot(filtered_2d_pts[0, :], filtered_2d_pts[1, :], linestyle="None",
+            marker='.', markersize=2, color=color_tm)
+
+
 def draw_3d_predictions(filtered_gt_objs,
                         p_matrix,
                         predictions_to_show,
@@ -629,6 +713,94 @@ def draw_prediction_info(ax, x, y,
             path_effects=[
                 patheffects.withStroke(linewidth=2,
                                        foreground='black')])
+
+
+def get_point_cloud_in_image_fov(point_cloud, calib, xmin, ymin, xmax, ymax,
+                           return_more=False, clip_distance=2.0):
+    """Filter lidar points, keep those in image FOV"""
+    pts_2d = calib.project_velo_to_image(point_cloud)
+    fov_inds = (pts_2d[:, 0] < xmax) & (pts_2d[:, 0] >= xmin) & \
+        (pts_2d[:, 1] < ymax) & (pts_2d[:, 1] >= ymin)
+    fov_inds = fov_inds & (point_cloud[:, 0] > clip_distance)
+    imgfov_point_cloud = point_cloud[fov_inds, :]
+    if return_more:
+        return imgfov_point_cloud, pts_2d, fov_inds
+    else:
+        return imgfov_point_cloud
+
+
+def draw_point_cloud_on_image(point_cloud, img, calib, img_width, img_height):
+    """Project LiDAR points to image"""
+    imgfov_point_cloud, pts_2d, fov_inds = get_point_cloud_in_image_fov(point_cloud,
+        calib, 0, 0, img_width, img_height, True)
+    imgfov_pts_2d = pts_2d[fov_inds,:]
+    imgfov_pc_rect = calib.project_velo_to_rect(imgfov_point_cloud)
+
+    import matplotlib.pyplot as plt
+    cmap = plt.cm.get_cmap('hsv', 256)
+    cmap = np.array([cmap(i) for i in range(256)])[:, :3]*255
+
+    for i in range(imgfov_pts_2d.shape[0]):
+        depth = imgfov_pc_rect[i, 2]
+        color = cmap[int(640.0/depth), :]
+        cv2.circle(img, (int(np.round(imgfov_pts_2d[i, 0])),
+            int(np.round(imgfov_pts_2d[i, 1]))),
+            2, color=tuple(color), thickness=-1)
+    Image.fromarray(img).show()
+    return img
+
+
+def get_point_filter(point_cloud, extents, ground_plane=None, offset_dist=2.0):
+    """
+    Creates a point filter using the 3D extents and ground plane
+
+    :param point_cloud: Point cloud in the form [[x,...],[y,...],[z,...]]
+    :param extents: 3D area in the form
+        [[min_x, max_x], [min_y, max_y], [min_z, max_z]]
+    :param ground_plane: Optional, coefficients of the ground plane
+        (a, b, c, d)
+    :param offset_dist: If ground_plane is provided, removes points above
+        this offset from the ground_plane
+    :return: A binary mask for points within the extents and offset plane
+    """
+
+    point_cloud = np.asarray(point_cloud)
+
+    # Filter points within certain xyz range
+    x_extents = extents[0]
+    y_extents = extents[1]
+    z_extents = extents[2]
+    print('x_extents =', x_extents)
+    print('y_extents =', y_extents)
+    print('z_extents =', z_extents)
+    extents_filter = (point_cloud[0] > x_extents[0]) & \
+                     (point_cloud[0] < x_extents[1]) & \
+                     (point_cloud[1] > y_extents[0]) & \
+                     (point_cloud[1] < y_extents[1]) & \
+                     (point_cloud[2] > z_extents[0]) & \
+                     (point_cloud[2] < z_extents[1])
+
+    if ground_plane is not None:
+        ground_plane = np.array(ground_plane)
+
+        # Calculate filter using ground plane
+        ones_col = np.ones(point_cloud.shape[1])
+        padded_points = np.vstack([point_cloud, ones_col])
+
+        offset_plane = ground_plane + [0, 0, 0, -offset_dist]
+
+        # Create plane filter
+        dot_prod = np.dot(offset_plane, padded_points)
+        plane_filter = dot_prod < 0
+
+        # Combine the two filters
+        point_filter = np.logical_and(extents_filter, plane_filter)
+    else:
+        # Only use the extents for filtering
+        point_filter = extents_filter
+        print('point_filter = ', point_filter)
+
+    return point_filter
 
 
 if __name__ == '__main__':
