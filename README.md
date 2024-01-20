@@ -2,10 +2,13 @@
 
 This repository contains the public release of the Python implementation of Pedestrian Planar LiDAR Pose Network (PPLP) Network for Oriented Pedestrian Detection Based on Planar LiDAR and Monocular Camera, along with an implementation of Aggregate View Object Detection (AVOD) method as the baseline.
 
-We appreciate if you could cite our paper:
-```
-TODO
-```
+We appreciate if you could cite our PPLP paper:
+
+https://ieeexplore.ieee.org/document/8943147
+
+Authors:
+Fan Bu; **Trinh Le**; Xiaoxiao Du; Ram Vasudevan; Matthew Johnson-Roberson
+
 
 ### Images
 1. **Overall Architecture**:
